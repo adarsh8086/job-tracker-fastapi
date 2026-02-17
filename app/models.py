@@ -7,8 +7,8 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, index=True)
-    hashed_password = Column(String)
+    email = Column(String(255), unique=True, index=True)
+    hashed_password = Column(String(255))
 
     jobs = relationship("Job", back_populates="owner")
 
@@ -17,11 +17,11 @@ class Job(Base):
     __tablename__ = "jobs"
 
     id = Column(Integer, primary_key=True, index=True)
-    company_name = Column(String)
-    position = Column(String)
-    location = Column(String)
-    salary = Column(String, nullable=True)
-    status = Column(String)
+    company_name = Column(String(150))
+    position = Column(String(150))
+    location = Column(String(150))
+    salary = Column(String(100), nullable=True)
+    status = Column(String(50))
     applied_date = Column(Date)
     notes = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
