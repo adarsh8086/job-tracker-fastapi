@@ -18,6 +18,8 @@ jobs:
           MYSQL_DATABASE: jobtracker
           MYSQL_USER: jobuser
           MYSQL_PASSWORD: jobpass123
+        ports:
+          - 3306:3306
         options: >-
           --health-cmd="mysqladmin ping --silent"
           --health-interval=10s
@@ -25,12 +27,14 @@ jobs:
           --health-retries=5
 
     env:
-      DATABASE_URL: mysql+pymysql://jobuser:jobpass123@mysql:3306/jobtracker
+      DATABASE_URL: mysql+pymysql://jobuser:jobpass123@127.0.0.1:3306/jobtracker
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
@@ -43,7 +47,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y mysql-client
-          until mysqladmin ping -h mysql -u jobuser -pjobpass123 --silent; do
+          until mysqladmin ping -h 127.0.0.1 -u jobuser -pjobpass123 --silent; do
             sleep 2
           done
 
