@@ -1,11 +1,15 @@
 from fastapi import FastAPI
-from .database import engine
+from .database import engine, Base
 from . import models
 from app.routes import users, jobs
 
-models.Base.metadata.create_all(bind=engine)
+
 
 app = FastAPI()
+
+@app.on_event("startup")
+def on_startup():
+    Base.metadata.create_all(bind=engine)
 
 # @app.get("/")
 # def root():
