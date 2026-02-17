@@ -1,9 +1,13 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+import os
+from dotenv import load_dotenv
 
 
-DATABASE_URL = "mysql+pymysql://jobuser:jobpass123@localhost:3306/jobtracker"
+load_dotenv()  # loads variables from .env into environment
+
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 
 engine = create_engine(DATABASE_URL)
