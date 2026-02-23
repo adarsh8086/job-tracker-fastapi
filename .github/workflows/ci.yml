@@ -53,7 +53,7 @@ jobs:
 
       - name: Check app imports correctly
         run: |
-          python -c "from app.main import app"
+          python -c "from backend.app.main import app"
 
   frontend:
     runs-on: ubuntu-latest
